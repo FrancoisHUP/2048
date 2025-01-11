@@ -1,0 +1,23 @@
+Using device: cuda
+Episode 500 (10 episodes evaluation): Avg Score = 739.20, Std = 495.04
+Episode 1000 (10 episodes evaluation): Avg Score = 792.40, Std = 554.45
+Episode 1500 (10 episodes evaluation): Avg Score = 795.20, Std = 475.21
+Episode 2000 (10 episodes evaluation): Avg Score = 1007.20, Std = 524.99
+Episode 2500 (10 episodes evaluation): Avg Score = 811.20, Std = 579.07
+Episode 3000 (10 episodes evaluation): Avg Score = 704.00, Std = 418.76
+Episode 3500 (10 episodes evaluation): Avg Score = 936.00, Std = 470.29
+Episode 4000 (10 episodes evaluation): Avg Score = 917.20, Std = 759.71
+Episode 4500 (10 episodes evaluation): Avg Score = 872.80, Std = 614.47
+Episode 5000 (10 episodes evaluation): Avg Score = 648.80, Std = 430.25
+Episode 5500 (10 episodes evaluation): Avg Score = 754.80, Std = 403.22
+Episode 6000 (10 episodes evaluation): Avg Score = 883.20, Std = 492.07
+Episode 6500 (10 episodes evaluation): Avg Score = 1064.80, Std = 867.65
+Episode 7000 (10 episodes evaluation): Avg Score = 899.20, Std = 606.82
+Episode 7500 (10 episodes evaluation): Avg Score = 965.60, Std = 608.86
+Episode 8000 (10 episodes evaluation): Avg Score = 1110.00, Std = 491.47
+Episode 8500 (10 episodes evaluation): Avg Score = 764.00, Std = 416.82
+Episode 9000 (10 episodes evaluation): Avg Score = 824.40, Std = 477.96
+Episode 9500 (10 episodes evaluation): Avg Score = 992.40, Std = 406.91
+Episode 10000 (10 episodes evaluation): Avg Score = 746.00, Std = 368.72
+Episode 10500 (10 episodes evaluation): Avg Score = 770.80, Std = 432.79
+Episode 11000 (10 episodes evaluation): Avg Score = 942.80, Std = 451.56

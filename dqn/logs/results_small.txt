@@ -1,0 +1,140 @@
+Training Progress:   2%|██▏                                                                                                           | 100/5000 [00:32<23:55,  3.41episode/s, Episode=100, Reward=1.81e+4, Steps=11852]Evaluating 10 games
+Episode 100: Avg Score = 868.00, Std = 406.84
+Training Progress:   4%|████▍                                                                                                         | 200/5000 [01:06<27:40,  2.89episode/s, Episode=200, Reward=19573.0, Steps=23068]Evaluating 10 games
+Episode 200: Avg Score = 1004.80, Std = 727.45
+Training Progress:   6%|██████▌                                                                                                       | 300/5000 [01:44<25:25,  3.08episode/s, Episode=300, Reward=21636.5, Steps=35823]Evaluating 10 games
+Episode 300: Avg Score = 848.00, Std = 477.23
+Training Progress:   8%|████████▊                                                                                                     | 400/5000 [02:18<27:34,  2.78episode/s, Episode=400, Reward=2.19e+4, Steps=46996]Evaluating 10 games
+Episode 400: Avg Score = 1150.80, Std = 682.66
+Training Progress:  10%|███████████                                                                                                   | 500/5000 [02:54<22:04,  3.40episode/s, Episode=500, Reward=1.85e+4, Steps=58941]Evaluating 10 games
+Episode 500: Avg Score = 1228.40, Std = 823.04
+Training Progress:  12%|█████████████▏                                                                                                | 600/5000 [03:28<21:50,  3.36episode/s, Episode=600, Reward=19906.5, Steps=70224]Evaluating 10 games
+Episode 600: Avg Score = 940.80, Std = 567.56
+Training Progress:  14%|███████████████▍                                                                                              | 700/5000 [04:03<20:15,  3.54episode/s, Episode=700, Reward=31743.0, Steps=81620]Evaluating 10 games
+Episode 700: Avg Score = 1142.00, Std = 692.39
+Training Progress:  16%|█████████████████▌                                                                                            | 800/5000 [04:38<25:52,  2.70episode/s, Episode=800, Reward=1.93e+4, Steps=93256]Evaluating 10 games
+Episode 800: Avg Score = 984.00, Std = 624.75
+Training Progress:  18%|███████████████████▌                                                                                         | 900/5000 [05:11<22:38,  3.02episode/s, Episode=900, Reward=2.72e+4, Steps=104126]Evaluating 10 games
+Episode 900: Avg Score = 830.80, Std = 429.96
+Training Progress:  20%|█████████████████████▍                                                                                     | 1000/5000 [05:50<21:50,  3.05episode/s, Episode=1000, Reward=5.58e+4, Steps=115594]Evaluating 10 games
+Episode 1000: Avg Score = 998.00, Std = 441.95
+Training Progress:  22%|███████████████████████▌                                                                                   | 1100/5000 [06:25<20:04,  3.24episode/s, Episode=1100, Reward=31293.5, Steps=127113]Evaluating 10 games
+Episode 1100: Avg Score = 811.60, Std = 646.52
+Training Progress:  24%|██████████████████████████▍                                                                                   | 1200/5000 [07:00<19:42,  3.21episode/s, Episode=1200, Reward=2e+4, Steps=138893]Evaluating 10 games
+Episode 1200: Avg Score = 1014.80, Std = 612.19
+Training Progress:  26%|███████████████████████████▊                                                                               | 1300/5000 [07:37<21:28,  2.87episode/s, Episode=1300, Reward=2.12e+4, Steps=150708]Evaluating 10 games
+Episode 1300: Avg Score = 874.00, Std = 562.99
+Training Progress:  28%|██████████████████████████████▊                                                                               | 1400/5000 [08:12<21:22,  2.81episode/s, Episode=1400, Reward=2e+4, Steps=162167]Evaluating 10 games
+Episode 1400: Avg Score = 1082.40, Std = 650.19
+Training Progress:  30%|████████████████████████████████                                                                           | 1500/5000 [08:49<26:01,  2.24episode/s, Episode=1500, Reward=2.63e+4, Steps=174316]Evaluating 10 games
+Episode 1500: Avg Score = 1014.00, Std = 778.21
+Training Progress:  32%|██████████████████████████████████▏                                                                        | 1600/5000 [09:25<22:32,  2.51episode/s, Episode=1600, Reward=1.76e+4, Steps=186041]Evaluating 10 games
+Episode 1600: Avg Score = 1138.80, Std = 741.74
+Training Progress:  34%|████████████████████████████████████▍                                                                      | 1700/5000 [09:59<14:40,  3.75episode/s, Episode=1700, Reward=34709.5, Steps=197303]Evaluating 10 games
+Episode 1700: Avg Score = 750.00, Std = 376.01
+Training Progress:  36%|██████████████████████████████████████▌                                                                    | 1800/5000 [10:35<15:11,  3.51episode/s, Episode=1800, Reward=2.01e+4, Steps=208690]Evaluating 10 games
+Episode 1800: Avg Score = 1026.40, Std = 537.58
+Training Progress:  38%|████████████████████████████████████████▋                                                                  | 1900/5000 [11:10<17:58,  2.88episode/s, Episode=1900, Reward=20436.0, Steps=220207]Evaluating 10 games
+Episode 1900: Avg Score = 942.00, Std = 686.30
+Training Progress:  40%|███████████████████████████████████████████▏                                                                | 2000/5000 [11:46<18:21,  2.72episode/s, Episode=2000, Reward=1.8e+4, Steps=231899]Evaluating 10 games
+Episode 2000: Avg Score = 915.60, Std = 392.23
+Training Progress:  42%|████████████████████████████████████████████▉                                                              | 2100/5000 [12:27<15:42,  3.08episode/s, Episode=2100, Reward=23434.5, Steps=243701]Evaluating 10 games
+Episode 2100: Avg Score = 713.20, Std = 350.77
+Training Progress:  44%|███████████████████████████████████████████████                                                            | 2200/5000 [13:06<23:39,  1.97episode/s, Episode=2200, Reward=2.23e+4, Steps=254926]Evaluating 10 games
+Episode 2200: Avg Score = 866.40, Std = 420.77
+Training Progress:  46%|█████████████████████████████████████████████████▏                                                         | 2300/5000 [13:46<21:04,  2.14episode/s, Episode=2300, Reward=1.72e+4, Steps=266665]Evaluating 10 games
+Episode 2300: Avg Score = 1023.60, Std = 621.99
+Training Progress:  48%|███████████████████████████████████████████████████▎                                                       | 2400/5000 [14:26<18:07,  2.39episode/s, Episode=2400, Reward=1.93e+4, Steps=277995]Evaluating 10 games
+Episode 2400: Avg Score = 870.00, Std = 359.72
+Training Progress:  50%|██████████████████████████████████████████████████████                                                      | 2500/5000 [15:03<15:26,  2.70episode/s, Episode=2500, Reward=2.1e+4, Steps=289441]Evaluating 10 games
+Episode 2500: Avg Score = 792.80, Std = 649.25
+Training Progress:  52%|████████████████████████████████████████████████████████▏                                                   | 2600/5000 [15:39<11:54,  3.36episode/s, Episode=2600, Reward=2.2e+4, Steps=301223]Evaluating 10 games
+Episode 2600: Avg Score = 1461.60, Std = 855.20
+Training Progress:  54%|█████████████████████████████████████████████████████████▊                                                 | 2700/5000 [16:13<15:59,  2.40episode/s, Episode=2700, Reward=1.76e+4, Steps=312179]Evaluating 10 games
+Episode 2700: Avg Score = 894.00, Std = 510.72
+Training Progress:  56%|███████████████████████████████████████████████████████████▉                                               | 2800/5000 [16:48<13:08,  2.79episode/s, Episode=2800, Reward=23852.0, Steps=323876]Evaluating 10 games
+Episode 2800: Avg Score = 1245.60, Std = 572.79
+Training Progress:  58%|██████████████████████████████████████████████████████████████                                             | 2900/5000 [17:23<10:13,  3.42episode/s, Episode=2900, Reward=11770.0, Steps=335324]Evaluating 10 games
+Episode 2900: Avg Score = 870.40, Std = 632.09
+Training Progress:  60%|████████████████████████████████████████████████████████████████▏                                          | 3000/5000 [17:59<10:27,  3.19episode/s, Episode=3000, Reward=2.68e+4, Steps=347119]Evaluating 10 games
+Episode 3000: Avg Score = 782.00, Std = 417.24
+Training Progress:  62%|██████████████████████████████████████████████████████████████████▎                                        | 3100/5000 [18:35<10:43,  2.95episode/s, Episode=3100, Reward=16486.5, Steps=358960]Evaluating 10 games
+Episode 3100: Avg Score = 940.80, Std = 450.03
+Training Progress:  56%|███████████████████████████████████████████████████████████▉                                               | 2800/5000 [16:48<13:08,  2.79episode/s, Episode=2800, Reward=23852.0, Steps=323876]Evaluating 10 games
+Episode 2800: Avg Score = 1245.60, Std = 572.79
+Training Progress:  58%|██████████████████████████████████████████████████████████████                                             | 2900/5000 [17:23<10:13,  3.42episode/s, Episode=2900, Reward=11770.0, Steps=335324]Evaluating 10 games
+Episode 2900: Avg Score = 870.40, Std = 632.09
+Training Progress:  60%|████████████████████████████████████████████████████████████████▏                                          | 3000/5000 [17:59<10:27,  3.19episode/s, Episode=3000, Reward=2.68e+4, Steps=347119]Evaluating 10 games
+Episode 3000: Avg Score = 782.00, Std = 417.24
+Training Progress:  62%|██████████████████████████████████████████████████████████████████▎                                        | 3100/5000 [18:35<10:43,  2.95episode/s, Episode=3100, Reward=16486.5, Steps=358960]ETraining Progress:  56%|███████████████████████████████████████████████████████████▉                                               | 2800/5000 [16:48<13:08,  2.79episode/s, Episode=2800, Reward=23852.0, Steps=323876]Evaluating 10 games
+Episode 2800: Avg Score = 1245.60, Std = 572.79
+Training Progress:  58%|██████████████████████████████████████████████████████████████                                             | 2900/5000 [17:23<10:13,  3.42episode/s, Episode=2900, Reward=11770.0, Steps=335324]Evaluating 10 games
+Episode 2900: Avg Score = 870.40, Std = 632.09
+Training Progress:  60%|████████████████████████████████████████████████████████████████▏                                          | 3000/5000 [17:59<10:27,  3.19episode/s, Episode=3000, Reward=2.68e+4, Steps=347119]Evaluating 10 games
+Episode 3000: Avg Score = 782.00, Std = 417.24
+Training Progress:  56%|███████████████████████████████████████████████████████████▉                                               | 2800/5000 [16:48<13:08,  2.79episode/s, Episode=2800, Reward=23852.0, Steps=323876]Evaluating 10 games
+Episode 2800: Avg Score = 1245.60, Std = 572.79
+Training Progress:  58%|██████████████████████████████████████████████████████████████                                             | 2900/5000 [17:23<10:13,  3.42episode/s, Episode=2900, Reward=11770.0, Steps=335324]Evaluating 10 games
+Episode 2900: Avg Score = 870.40, Std = 632.09
+Training Progress:  60%|████████████████████████████████████████████████████████████████▏                                          | 3000/5000 [17:59<10:27,  3.19episode/s, Episode=3000, Reward=2.68e+4, Steps=347119]Evaluating 10 games
+Episode 3000: Avg Score = 782.00, Std = 417.24
+Training Progress:  62%|██████████████████████████████████████████████████████████████████▎                                        | 3100/5000 [18:35<10:43,  2.95episode/s, Episode=3100, Reward=16486.5, Steps=358960]ETraining Progress:  56%|███████████████████████████████████████████████████████████▉                                               | 2800/5000 [16:48<13:08,  2.79episode/s, Episode=2800, Reward=23852.0, Steps=323876]Evaluating 10 games
+Episode 2800: Avg Score = 1245.60, Std = 572.79
+Training Progress:  58%|██████████████████████████████████████████████████████████████                                             | 2900/5000 [17:23<10:13,  3.42episode/s, Episode=2900, Reward=11770.0, Steps=335324]Evaluating 10 games
+Episode 2900: Avg Score = 870.40, Std = 632.09
+Training Progress:  60%|████████████████████████████████████████████████████████████████▏                                          | 3000/5000 [17:59<10:27,  3.19episode/s, Episode=3000, Reward=2.68e+4, Steps=347119]ETraining Progress:  56%|███████████████████████████████████████████████████████████▉                                               | 2800/5000 [16:48<13:08,  2.79episode/s, Episode=2800, Reward=23852.0, Steps=323876]Evaluating 10 games
+Episode 2800: Avg Score = 1245.60, Std = 572.79
+Training Progress:  58%|██████████████████████████████████████████████████████████████                                             | 2900/5000 [17:23<10:13,  3.42episode/s, Episode=2900, Reward=11770.0, Steps=335324]Evaluating 10 games
+Episode 2900: Avg Score = 870.40, Std = 632.09
+Training Progress:  56%|███████████████████████████████████████████████████████████▉                                               | 2800/5000 [16:48<13:08,  2.79episode/s, Episode=2800, Reward=23852.0, Steps=323876]Evaluating 10 games
+Episode 2800: Avg Score = 1245.60, Std = 572.79
+Training Progress:  56%|███████████████████████████████████████████████████████████▉                                               | 2800/5000 [16:48<13:08,  2.79episode/s, Episode=2800, Reward=23852.0, Steps=323876]Evaluating 10 games
+Training Progress:  56%|███████████████████████████████████████████████████████████▉                                               | 2800/5000 [16:48<13:08,  2.79episode/s, Episode=2800, Reward=23852.0, Steps=323876]ETraining Progress:  56%|███████████████████████████████████████████████████████████▉                                               | 2800/5000 [16:48<13:08,  2.79episode/s, Episode=2800, Reward=23852.0, Steps=323876]ETraining Progress:  56%|███████████████████████████████████████████████████████████▉                                               | 2800/5000 [16:48<13:08,  2.79episode/s, Episode=2800, Reward=23852.0, Steps=323876]Evaluating 10 games
+Training Progress:  56%|███████████████████████████████████████████████████████████▉                                               | 2800/5000 [16:48<13:08,  2.79episode/s, Episode=2800, Reward=23852.0, Steps=323876]Evaluating 10 games
+valuating 10 games
+Episode 2800: Avg Score = 1245.60, Std = 572.79
+Training Progress:  58%|██████████████████████████████████████████████████████████████                                             | 2900/5000 [17:23<10:13,  3.42episode/s, Episode=2900, Reward=11770.0, Steps=335324]Evaluating 10 games
+Episode 2900: Avg Score = 870.40, Std = 632.09
+Training Progress:  60%|████████████████████████████████████████████████████████████████▏                                          | 3000/5000 [17:59<10:27,  3.19episode/s, Episode=3000, Reward=2.68e+4, Steps=347119]Evaluating 10 games
+Episode 3000: Avg Score = 782.00, Std = 417.24
+Training Progress:  62%|██████████████████████████████████████████████████████████████████▎                                        | 3100/5000 [18:35<10:43,  2.95episode/s, Episode=3100, Reward=16486.5, Steps=358960]Evaluating 10 games
+Episode 3100: Avg Score = 940.80, Std = 450.03
+Training Progress:  64%|█████████████████████████████████████████████████████████████████████                                       | 3200/5000 [19:11<09:33,  3.14episode/s, Episode=3200, Reward=2.7e+4, Steps=370761]Evaluating 10 games
+Episode 3200: Avg Score = 974.40, Std = 488.39
+Training Progress:  66%|██████████████████████████████████████████████████████████████████████▌                                    | 3300/5000 [19:47<09:10,  3.09episode/s, Episode=3300, Reward=2.58e+4, Steps=382395]Evaluating 10 games
+Episode 3300: Avg Score = 996.40, Std = 440.71
+Training Progress:  68%|████████████████████████████████████████████████████████████████████████▊                                  | 3400/5000 [20:20<08:27,  3.15episode/s, Episode=3400, Reward=2.67e+4, Steps=393511]Evaluating 10 games
+Episode 3400: Avg Score = 1053.60, Std = 717.51
+Training Progress:  70%|██████████████████████████████████████████████████████████████████████████▉                                | 3500/5000 [20:55<07:13,  3.46episode/s, Episode=3500, Reward=1.76e+4, Steps=404619]Evaluating 10 games
+Episode 3500: Avg Score = 943.60, Std = 674.41
+Training Progress:  72%|█████████████████████████████████████████████████████████████████████████████                              | 3600/5000 [21:29<06:58,  3.35episode/s, Episode=3600, Reward=29158.0, Steps=416018]Evaluating 10 games
+Episode 3600: Avg Score = 1210.00, Std = 654.73
+Training Progress:  74%|███████████████████████████████████████████████████████████████████████████████▏                           | 3700/5000 [22:04<08:04,  2.68episode/s, Episode=3700, Reward=2.29e+4, Steps=427531]Evaluating 10 games
+Episode 3700: Avg Score = 982.80, Std = 464.33
+Training Progress:  76%|█████████████████████████████████████████████████████████████████████████████████▎                         | 3800/5000 [22:40<07:04,  2.82episode/s, Episode=3800, Reward=4.23e+4, Steps=439232]Evaluating 10 games
+Episode 3800: Avg Score = 732.00, Std = 446.30
+Training Progress:  78%|███████████████████████████████████████████████████████████████████████████████████▍                       | 3900/5000 [23:16<05:55,  3.09episode/s, Episode=3900, Reward=3.85e+4, Steps=450952]Evaluating 10 games
+Episode 3900: Avg Score = 858.40, Std = 402.35
+Training Progress:  80%|█████████████████████████████████████████████████████████████████████████████████████▌                     | 4000/5000 [23:50<05:04,  3.29episode/s, Episode=4000, Reward=24317.5, Steps=462010]Evaluating 10 games
+Episode 4000: Avg Score = 1119.20, Std = 471.12
+Training Progress:  82%|███████████████████████████████████████████████████████████████████████████████████████▋                   | 4100/5000 [24:27<05:01,  2.99episode/s, Episode=4100, Reward=1.24e+4, Steps=473464]Evaluating 10 games
+Episode 4100: Avg Score = 1213.60, Std = 648.79
+Training Progress:  84%|█████████████████████████████████████████████████████████████████████████████████████████▉                 | 4200/5000 [25:01<04:39,  2.87episode/s, Episode=4200, Reward=31731.0, Steps=484427]Evaluating 10 games
+Episode 4200: Avg Score = 828.80, Std = 415.15
+Training Progress:  86%|████████████████████████████████████████████████████████████████████████████████████████████               | 4300/5000 [25:35<03:50,  3.04episode/s, Episode=4300, Reward=21247.0, Steps=495734]Evaluating 10 games
+Episode 4300: Avg Score = 808.80, Std = 524.58
+Training Progress:  88%|██████████████████████████████████████████████████████████████████████████████████████████████▏            | 4400/5000 [26:09<03:21,  2.97episode/s, Episode=4400, Reward=1.89e+4, Steps=506794]Evaluating 10 games
+Episode 4400: Avg Score = 1054.00, Std = 789.43
+Training Progress:  90%|████████████████████████████████████████████████████████████████████████████████████████████████▎          | 4500/5000 [26:45<03:48,  2.19episode/s, Episode=4500, Reward=1.55e+4, Steps=518281]Evaluating 10 games
+Episode 4500: Avg Score = 942.80, Std = 445.96
+Training Progress:  92%|██████████████████████████████████████████████████████████████████████████████████████████████████▍        | 4600/5000 [27:20<02:22,  2.80episode/s, Episode=4600, Reward=3.02e+4, Steps=529666]Evaluating 10 games
+Episode 4600: Avg Score = 859.60, Std = 444.69
+Training Progress:  94%|████████████████████████████████████████████████████████████████████████████████████████████████████▌      | 4700/5000 [27:55<01:52,  2.67episode/s, Episode=4700, Reward=3.03e+4, Steps=540984]Evaluating 10 games
+Episode 4700: Avg Score = 1092.80, Std = 457.94
+Training Progress:  96%|██████████████████████████████████████████████████████████████████████████████████████████████████████▋    | 4800/5000 [28:30<00:58,  3.41episode/s, Episode=4800, Reward=3.62e+4, Steps=552149]Evaluating 10 games
+Episode 4800: Avg Score = 834.80, Std = 415.73
+Training Progress:  98%|████████████████████████████████████████████████████████████████████████████████████████████████████████▊  | 4900/5000 [29:08<00:33,  2.98episode/s, Episode=4900, Reward=2.42e+4, Steps=563690]Evaluating 10 games
+Episode 4900: Avg Score = 980.80, Std = 445.45
+Training Progress: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████| 5000/5000 [29:46<00:00,  2.80episode/s, Episode=4999, Reward=1.58e+4, Steps=575185] 
+Evaluating 100 games
+1025.24 481.6719863143382
