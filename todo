@@ -1,0 +1,8 @@
+[?] recursive, ttt?
+[?] use attention and recusivity on state of the game (for a simple state) instead of cnn and pixel?  
+
+[frozen] Add animation of sliding tiles. 
+[DONE] Add tiles to inifinit (2048,4096,...,128k,...)
+[DONE] Be able to Record games:  
+        -Keep games states at a given moment so it could replay it infront of me;
+        -User should be able to record it's game (every actions and states) to train the ai in the future. 

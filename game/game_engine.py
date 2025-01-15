@@ -1,4 +1,5 @@
 import random
+import json
 
 GRID_SIZE = 4
 
@@ -147,3 +148,60 @@ class GameEngine:
 
     def is_done(self):
         return self.done
+
+class GameRecorder:
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        """
+        Clear the current recording buffer.
+        """
+        self.recording = []
+        self.active = False
+
+    def start(self):
+        """
+        Start recording moves.
+        """
+        self.reset()
+        self.active = True
+
+    def record_step(self, state, action, next_state, reward, done, score):
+        """
+        Record a single step: the old state, the action,
+        the resulting next_state, the reward, whether done, and score.
+        """
+        if not self.active:
+            return
+        self.recording.append({
+            "state": state,         # 4x4 grid before the move
+            "action": action,       # e.g., 'left', 'right', etc.
+            "next_state": next_state,
+            "reward": reward,
+            "done": done,
+            "score": score
+        })
+
+    def stop(self):
+        """
+        Stop recording.
+        """
+        self.active = False
+
+    def save_to_json(self, filename="game_record.json"):
+        """
+        Save the current recording as JSON.
+        """
+        with open(filename, "w") as f:
+            json.dump(self.recording, f)
+        # print(f"Game recording saved to {filename}")
+
+    def load_from_json(self, filename="game_record.json"):
+        """
+        Load a recorded game from JSON file.
+        Returns the loaded recording (list of steps).
+        """
+        with open(filename, "r") as f:
+            data = json.load(f)
+        return data

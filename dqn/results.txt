@@ -1,6 +1,0 @@
-frank@Frank MINGW64 /c/Dev/youtube/AIGames/2048
-$ python main.py 
-Using device: cuda
-Evaluating 100 games
-mean : 1162.96 
-std :  544.8013568265043
