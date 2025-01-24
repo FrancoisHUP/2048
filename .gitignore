@@ -1,6 +1,6 @@
 
 **logs/
-**model_chkpt/
+**model_chkpt*/
 **recorded_games/
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python

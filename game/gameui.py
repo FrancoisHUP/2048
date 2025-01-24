@@ -2,6 +2,19 @@ import tkinter as tk
 from tkinter import messagebox, filedialog
 from game.game_engine import GameEngine, GameRecorder
 import math
+
+import tkinter as tk
+import threading
+import queue
+import time
+
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+
+from agent.dqn.ai import DQN2048
+
     
 GRID_SIZE = 4
 CELL_SIZE = 100
@@ -127,11 +140,24 @@ class Game2048GUI:
         )
         self.record_button.pack(side=tk.LEFT, padx=5)
 
+        self.load_model_button = tk.Button(
+            self.button_frame, text="Load Model", font=("Verdana", 12),
+            command=self.load_model
+        )
+        self.load_model_button.pack(side=tk.LEFT, padx=5)
+
         self.ai_button = tk.Button(
             self.button_frame, text="AI Move", font=("Verdana", 12),
-            command=self.ai_move
+            command=self.ai_move,
+            state=tk.DISABLED  # Initially disabled
         )
-        self.ai_button.pack(side=tk.LEFT, padx=5)
+        self.ai_button.pack(side=tk.LEFT, padx=5) 
+
+        self.train_button = tk.Button(
+            self.button_frame, text="Train AI", font=("Verdana", 12),
+            command=self.open_training_config
+        )
+        self.train_button.pack(side=tk.LEFT, padx=5)
 
         # ------------------- REPLAY FRAME -------------------
         self.back_button = tk.Button(
@@ -181,6 +207,102 @@ class Game2048GUI:
 
         # Initial draw
         self.draw_tiles()
+    
+    # -------------------------------------------------------------------------
+    #                            LOAD MODEL
+    # -------------------------------------------------------------------------
+    def load_model(self):
+        """
+        Open a file dialog to select a model, load it, and enable the AI Move button.
+        """
+        file_path = filedialog.askopenfilename(
+            title="Load AI Model",
+            filetypes=[("Model Files", "*.pth"), ("All Files", "*.*")]
+        )
+
+        if not file_path:
+            messagebox.showinfo("Load Model", "No model file selected.")
+            return
+
+        try:
+            # Load the model
+            self.ai_model = DQN2048(model_path=file_path)
+            self.ai_button.config(state=tk.NORMAL)  # Enable the AI Move button
+            messagebox.showinfo("Load Model", f"Model loaded successfully from:\n{file_path}")
+        except Exception as e:
+            messagebox.showerror("Load Model", f"Failed to load model:\n{e}")
+
+    # -------------------------------------------------------------------------
+    #                             AI MOVE
+    # -------------------------------------------------------------------------
+    def ai_move(self):
+        """
+        Use the loaded AI model to make a move on behalf of the user.
+        Ensures the AI doesn't get stuck by predicting invalid moves.
+        """
+        if not self.ai_model:
+            messagebox.showerror("AI Move", "No AI model loaded.")
+            return
+
+        if self.engine.is_done():
+            messagebox.showinfo("Game Over", "The game is over. Start a new game.")
+            return
+
+        # Get valid actions
+        valid_actions = [
+            action for action in ['up', 'down', 'left', 'right']
+            if self.engine.is_valid_action(action)
+        ]
+
+        if not valid_actions:
+            messagebox.showinfo("No Moves", "No valid moves left. Game over.")
+            return
+
+        # Use the AI model to predict the next move
+        try:
+            action = self.ai_model.predict_move(self.engine.get_state(), valid_actions)
+            self._do_move(action)
+        except ValueError as e:
+            messagebox.showerror("AI Error", f"AI could not make a valid move: {e}")
+
+    # -------------------------------------------------------------------------
+    #                            DO MOVE
+    # -------------------------------------------------------------------------
+    def _do_move(self, action):
+        if self.animation_in_progress:
+            return
+
+        old_state = self.engine.get_state()
+        new_grid, reward, done, info = self.engine.step(action)
+        new_score = self.engine.get_score()
+
+        self.draw_tiles()
+
+        # If we're recording, store this step
+        if self.recorder.active:
+            self.recorder.record_step(
+                old_state,
+                action,
+                new_grid,
+                reward,
+                done,
+                new_score
+            )
+
+        if done:
+            if new_score > self.best_score:
+                self.best_score = new_score
+                self.best_score_label.config(text=f"Best: {self.best_score}")
+            messagebox.showinfo("2048", f"Game Over!\nYour Score: {new_score}")
+
+    # -------------------------------------------------------------------------
+    #                             TRAIN AI
+    # -------------------------------------------------------------------------
+    def open_training_config(self):
+        """
+        Open the TrainingConfigWindow to set training parameters.
+        """
+        TrainingConfigWindow(self.master)
 
     # -------------------------------------------------------------------------
     #                             DRAWING
@@ -445,41 +567,321 @@ class Game2048GUI:
             return
         self._do_move(action)
 
-    def ai_move(self):
-        if self.is_replaying:
-            messagebox.showinfo("Replay mode", "Currently in replay mode. Cannot use AI here.")
+
+class TrainingWindow(tk.Toplevel):
+    """
+    A window that runs training in a background thread and displays
+    real-time metrics (Reward, Loss, Score, etc.) using matplotlib.
+    This is similar to what we've built before, but it now accepts
+    all hyperparameters as arguments.
+    """
+    def __init__(
+        self,
+        parent,
+        ai,
+        env,
+        episodes=5000,
+        gamma=0.99,
+        lr_start=5e-4,
+        lr_end=5e-5,
+        batch_size=128,
+        memory_size=100000,
+        target_update=25,
+        eps_start=1.0,
+        eps_end=0.1,
+        eps_decay=40000,
+        temperature=1.0,
+    ):
+        super().__init__(parent)
+        self.title("2048 Training")
+        self.geometry("800x600")
+        self.resizable(False, False)
+
+        self.ai = ai
+        self.env = env
+
+        # Store the hyperparameters
+        self.episodes = episodes
+        self.gamma = gamma
+        self.lr_start = lr_start
+        self.lr_end = lr_end
+        self.batch_size = batch_size
+        self.memory_size = memory_size
+        self.target_update = target_update
+        self.eps_start = eps_start
+        self.eps_end = eps_end
+        self.eps_decay = eps_decay
+        self.temperature = temperature
+
+        # We’ll create a queue for receiving training status
+        self.result_queue = queue.Queue()
+
+        # -- Top Frame with Info Labels --
+        top_frame = tk.Frame(self)
+        top_frame.pack(side=tk.TOP, fill=tk.X, padx=5, pady=5)
+
+        self.label_episode = tk.Label(top_frame, text="Episode: 0 / 0", width=18, anchor="w")
+        self.label_episode.pack(side=tk.LEFT, padx=10)
+
+        self.label_steps = tk.Label(top_frame, text="Steps: 0", width=12, anchor="w")
+        self.label_steps.pack(side=tk.LEFT, padx=10)
+
+        self.label_eps = tk.Label(top_frame, text="Epsilon: N/A", width=16, anchor="w")
+        self.label_eps.pack(side=tk.LEFT, padx=10)
+
+        self.label_sps = tk.Label(top_frame, text="Steps/sec: 0", width=16, anchor="w")
+        self.label_sps.pack(side=tk.LEFT, padx=10)
+
+        self.label_htile = tk.Label(top_frame, text="Highest Tile: 0", width=18, anchor="w")
+        self.label_htile.pack(side=tk.LEFT, padx=10)
+
+        self.best_score = 0  # Initialize best score
+        self.label_best_score = tk.Label(top_frame, text="Best Score: 0", width=18, anchor="w")
+        self.label_best_score.pack(side=tk.LEFT, padx=10)
+
+        # -- Matplotlib Figure with 3 Subplots: Reward, Loss, Score --
+        self.fig = Figure(figsize=(7, 4), dpi=100)
+        # We use a 3x1 grid for three subplots
+        self.ax_reward = self.fig.add_subplot(311)
+        self.ax_score = self.fig.add_subplot(312)
+        self.ax_loss = self.fig.add_subplot(313)
+        self.fig.tight_layout()
+
+        self.canvas = FigureCanvasTkAgg(self.fig, master=self)
+        self.canvas_widget = self.canvas.get_tk_widget()
+        self.canvas_widget.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+        # Data for plots
+        self.episodes_list = []
+        self.rewards_list = []
+        self.losses_list = []
+        self.scores_list = [] 
+
+        # Start the training in a background thread
+        self.train_thread = threading.Thread(
+            target=self.run_training_thread,
+            daemon=True
+        )
+        self.train_thread.start()
+
+        # Start polling the queue
+        self.after(100, self.poll_queue)
+
+    def run_training_thread(self):
+        """
+        This method runs in the background thread.
+        We'll call a method from your AI (like "train_in_thread")
+        that uses the hyperparams we set. We'll pass self.result_queue for updates.
+        """
+        # You might create a new method in DQN2048 that accepts all these parameters:
+        self.ai.train_in_thread(
+            env=self.env,
+            episodes=self.episodes,
+            gamma=self.gamma,
+            lr_start=self.lr_start,
+            lr_end=self.lr_end,
+            batch_size=self.batch_size,
+            memory_size=self.memory_size,
+            target_update=self.target_update,
+            eps_start=self.eps_start,
+            eps_end=self.eps_end,
+            eps_decay=self.eps_decay,
+            temperature=self.temperature,
+            result_queue=self.result_queue,
+        )
+    def poll_queue(self):
+        """
+        Check the result_queue for new training info.
+        Update the UI. Schedule itself to run again after 100ms.
+        """
+        while True:
+            try:
+                msg = self.result_queue.get_nowait()
+            except queue.Empty:
+                break
+
+            if msg is None:
+                # Training is done
+                tk.messagebox.showinfo("Training Complete", "All episodes finished!")
+                return
+            else:
+                # Unpack data from the training thread
+                episode = msg["episode"]
+                episodes_total = msg["episodes_total"]
+                steps_done = msg["steps_done"]
+                steps_per_sec = msg["steps_per_sec"]
+                highest_tile_overall = msg["highest_tile_overall"]
+                epsilon = msg["epsilon"]
+                reward = msg["reward"]
+                loss = msg["loss"]
+                score = msg["score"]  # Current game score
+
+                # Update the best score if the current score is higher
+                if score > self.best_score:
+                    self.best_score = score
+                    self.label_best_score.config(text=f"Best Score: {self.best_score}")
+
+                # Update labels
+                self.label_episode.config(text=f"Episode: {episode}/{episodes_total}")
+                self.label_steps.config(text=f"Steps: {steps_done}")
+                self.label_eps.config(text=f"Epsilon: {epsilon:.4f}")
+                self.label_sps.config(text=f"Steps/sec: {steps_per_sec:.2f}")
+                self.label_htile.config(text=f"Highest Tile: {highest_tile_overall}")
+
+                # Update data lists
+                self.episodes_list.append(episode)
+                self.rewards_list.append(reward)
+                self.losses_list.append(loss)
+                self.scores_list.append(score)
+
+                # Redraw all plots
+                self.ax_reward.clear()
+                self.ax_reward.set_title("Reward per Episode")
+                self.ax_reward.set_xlabel("Episode")
+                self.ax_reward.set_ylabel("Reward")
+                self.ax_reward.plot(self.episodes_list, self.rewards_list, color="blue")
+
+                self.ax_score.clear()
+                self.ax_score.set_title("Score per Episode")
+                self.ax_score.set_xlabel("Episode")
+                self.ax_score.set_ylabel("Score")
+                self.ax_score.plot(self.episodes_list, self.scores_list, color="green")
+
+                self.ax_loss.clear()
+                self.ax_loss.set_title("Loss per Episode")
+                self.ax_loss.set_xlabel("Episode")
+                self.ax_loss.set_ylabel("Loss")
+                self.ax_loss.plot(self.episodes_list, self.losses_list, color="red")                
+
+                self.fig.tight_layout()
+                self.canvas.draw()
+
+        # Continue polling
+        self.after(100, self.poll_queue)
+
+class TrainingConfigWindow(tk.Toplevel):
+    """
+    A window that lets the user set all the training parameters before starting training.
+    Once the user clicks 'Start Training', we open the TrainingWindow with the specified hyperparams.
+    """
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Training Configuration")
+        self.geometry("400x500")
+        self.transient(parent)  # Make it a modal dialog
+        self.grab_set()  # Ensure it captures all events while open
+        self.resizable(False, False)
+
+        # We'll store entries in a dict for convenience
+        self.entries = {}
+
+        row = 0
+
+        # MODEL PATH (LOAD EXISTING)
+        tk.Label(self, text="Model Path").grid(row=row, column=0, sticky="e", padx=5, pady=5)
+        self.model_path_var = tk.StringVar()
+        tk.Entry(self, textvariable=self.model_path_var, width=30).grid(row=row, column=1, padx=5, pady=5)
+        tk.Button(self, text="Browse", command=self.browse_model).grid(row=row, column=2, padx=5, pady=5)
+        row += 1
+
+        # EPISODES
+        row = self._add_label_entry("Episodes", default_val="5000", row=row)
+        # GAMMA
+        row = self._add_label_entry("Gamma", default_val="0.99", row=row)
+        # LR_START
+        row = self._add_label_entry("LR Start", default_val="0.0005", row=row)
+        # LR_END
+        row = self._add_label_entry("LR End", default_val="0.0005", row=row)
+        # BATCH_SIZE
+        row = self._add_label_entry("Batch Size", default_val="128", row=row)
+        # MEMORY_SIZE
+        row = self._add_label_entry("Memory Size", default_val="100000", row=row)
+        # TARGET_UPDATE
+        row = self._add_label_entry("Target Update (steps)", default_val="25", row=row)
+        # EPS_START
+        row = self._add_label_entry("Eps Start", default_val="1.0", row=row)
+        # EPS_END
+        row = self._add_label_entry("Eps End", default_val="0.1", row=row)
+        # EPS_DECAY
+        row = self._add_label_entry("Eps Decay", default_val="40000", row=row)
+        # TEMPERATURE
+        row = self._add_label_entry("Temperature", default_val="1.0", row=row)
+
+        # START TRAINING BUTTON
+        tk.Button(self, text="Start Training", command=self.start_training).grid(row=row, column=0, columnspan=3, pady=20)
+
+
+    def _add_label_entry(self, label_text, default_val, row):
+        """
+        Utility to add a label + entry with default value.
+        We'll store the StringVar in self.entries[label_text].
+        """
+        tk.Label(self, text=label_text).grid(row=row, column=0, sticky="e", padx=5, pady=5)
+        var = tk.StringVar(value=default_val)
+        entry = tk.Entry(self, textvariable=var, width=15)
+        entry.grid(row=row, column=1, padx=5, pady=5)
+        self.entries[label_text] = var
+        return row + 1
+
+    def browse_model(self):
+        """
+        Let user pick a model file. Store path in self.model_path_var.
+        """
+        file_path = filedialog.askopenfilename(
+            title="Select Model File",
+            filetypes=[("PyTorch Files", "*.pth"), ("All Files", "*.*")]
+        )
+        if file_path:
+            self.model_path_var.set(file_path)
+
+    def start_training(self):
+        """
+        Read all user entries, parse them, create a new AI (with model if provided),
+        then open the TrainingWindow with the user-specified hyperparameters.
+        """
+        try:
+            model_path = self.model_path_var.get().strip() or None
+
+            episodes = int(self.entries["Episodes"].get().strip())
+            gamma = float(self.entries["Gamma"].get().strip())
+            lr_start = float(self.entries["LR Start"].get().strip())
+            lr_end = float(self.entries["LR End"].get().strip())
+            batch_size = int(self.entries["Batch Size"].get().strip())
+            memory_size = int(self.entries["Memory Size"].get().strip())
+            target_update = int(self.entries["Target Update (steps)"].get().strip())
+            eps_start = float(self.entries["Eps Start"].get().strip())
+            eps_end = float(self.entries["Eps End"].get().strip())
+            eps_decay = float(self.entries["Eps Decay"].get().strip())
+            temperature = float(self.entries["Temperature"].get().strip())
+        except ValueError as e:
+            messagebox.showerror("Invalid input", f"Please enter valid numeric values.\n\nError: {e}")
             return
-        if not self.ai_model:
-            return
-        if self.engine.is_done():
-            return
 
-        action = self.ai_model.predict_move(self.engine.get_state())
-        self._do_move(action)
+        # Create environment
+        env = GameEngine()
 
-    def _do_move(self, action):
-        if self.animation_in_progress:
-            return
+        # Create AI
+        if model_path:
+            ai = DQN2048(model_path=model_path)
+        else:
+            ai = DQN2048()
 
-        old_state = self.engine.get_state()
-        new_grid, reward, done, info = self.engine.step(action)
-        new_score = self.engine.get_score()
+        # Create the TrainingWindow
+        train_window = TrainingWindow(
+            parent=self,
+            ai=ai,
+            env=env,
+            episodes=episodes,
+            gamma=gamma,
+            lr_start=lr_start,
+            lr_end=lr_end,
+            batch_size=batch_size,
+            memory_size=memory_size,
+            target_update=target_update,
+            eps_start=eps_start,
+            eps_end=eps_end,
+            eps_decay=eps_decay,
+            temperature=temperature,
+        )
+        train_window.grab_set()  # Make the training window modal if needed
 
-        self.draw_tiles()
-
-        # If we're recording, store this step
-        if self.recorder.active:
-            self.recorder.record_step(
-                old_state,
-                action,
-                new_grid,
-                reward,
-                done,
-                new_score
-            )
-
-        if done:
-            if new_score > self.best_score:
-                self.best_score = new_score
-                self.best_score_label.config(text=f"Best: {self.best_score}")
-            messagebox.showinfo("2048", f"Game Over!\nYour Score: {new_score}")
